@@ -1,4 +1,4 @@
-<meta http-equiv="Content-Type" content="text/html; charset= utf-8 ">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset= utf-8 ">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-7s5uDGW3AHqw6xtJmNNtr+OBRJUlgkNJEo78P4b0yRw= sha512-nNo+yCHEyn0smMxSswnf/OnX6/KwJuZTlNZBjauKhTK0c+zT+q5JOCx0UFhXQ6rJR9jg6Es8gPuD2uZcYDLqSw==" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha256-KXn5puMvxCw+dAYznun+drMdG1IFl3agK0p/pqT9KAo= sha512-2e8qq0ETcfWRI4HJBzQiA3UoyFk6tbNyG+qSaIBZLyW9Xf3sWZHN/lxe9fTh1U45DpPf07yj94KsUHHWe4Yk1A==" crossorigin="anonymous"></script>
@@ -33,7 +33,7 @@ img {
 }
 </style>
 
-<div class="container">
+</head><body class=""><div class="container">
 	<div class="row">
 		<div class="col-md-6">
 			<h2>FE:A Conversation Creator by Funky</h2>
@@ -64,15 +64,26 @@ img {
 		<div class="col-md-3">
 			<p>Character 1:</p>
 			<select id="char1">
-			</select>
+			<option value="0">Player</option><option value="1">Male Robin</option><option value="2">Female Robin</option><option value="3">Chrom</option><option value="4">Lissa</option><option value="5">Frederick</option><option value="6">Sully</option><option value="7">Virion</option><option value="8">Stahl</option><option value="9">Vaike</option><option value="10">Miriel</option><option value="11">Sumia</option><option value="12">Kellam</option><option value="13">Donnel</option><option value="14">Lon'qu</option><option value="15">Ricken</option><option value="16">Maribelle</option><option value="17">Panne</option><option value="18">Gaius</option><option value="19">Cordelia</option><option value="20">Gregor</option><option value="21">Nowi</option><option value="22">Libra</option><option value="23">Tharja</option><option value="24">Anna</option><option value="25">Olivia</option><option value="26">Cherche</option><option value="27">Henry</option><option value="28">Lucina</option><option value="29">Say'ri</option><option value="30">Tiki</option><option value="31">Basilio</option><option value="32">Flavia</option><option value="33">Gangrel</option><option value="34">Walhart</option><option value="35">Emmeryn</option><option value="36">Yen'fay</option><option value="37">Aversa</option><option value="38">Priam</option><option value="39">Owain</option><option value="40">Inigo</option><option value="41">Brady</option><option value="42">Kjelle</option><option value="43">Cynthia</option><option value="44">Severa</option><option value="45">Gerome</option><option value="46">Morgan</option><option value="47">Yarne</option><option value="48">Laurent</option><option value="49">Noire</option><option value="50">Nah</option></select>
 		</div>
 		
 		<div class="col-md-3">
 			<p>Character 2:</p>
 			<select id="char2">
-			</select>
+			<option value="0">Player</option><option value="1">Male Robin</option><option value="2">Female Robin</option><option value="3">Chrom</option><option value="4">Lissa</option><option value="5">Frederick</option><option value="6">Sully</option><option value="7">Virion</option><option value="8">Stahl</option><option value="9">Vaike</option><option value="10">Miriel</option><option value="11">Sumia</option><option value="12">Kellam</option><option value="13">Donnel</option><option value="14">Lon'qu</option><option value="15">Ricken</option><option value="16">Maribelle</option><option value="17">Panne</option><option value="18">Gaius</option><option value="19">Cordelia</option><option value="20">Gregor</option><option value="21">Nowi</option><option value="22">Libra</option><option value="23">Tharja</option><option value="24">Anna</option><option value="25">Olivia</option><option value="26">Cherche</option><option value="27">Henry</option><option value="28">Lucina</option><option value="29">Say'ri</option><option value="30">Tiki</option><option value="31">Basilio</option><option value="32">Flavia</option><option value="33">Gangrel</option><option value="34">Walhart</option><option value="35">Emmeryn</option><option value="36">Yen'fay</option><option value="37">Aversa</option><option value="38">Priam</option><option value="39">Owain</option><option value="40">Inigo</option><option value="41">Brady</option><option value="42">Kjelle</option><option value="43">Cynthia</option><option value="44">Severa</option><option value="45">Gerome</option><option value="46">Morgan</option><option value="47">Yarne</option><option value="48">Laurent</option><option value="49">Noire</option><option value="50">Nah</option></select>
 		</div>
 		
+	</div>
+	
+	<div class="row">
+		<div class="col-md-6">
+			<br>
+			<button type="button" data-toggle="modal" data-target="#bgmModal">Select Bg Music</button>
+		</div>
+		<div class="col-md-6">
+			<br>
+			<button type="button" class="btn btn-info" onclick="refreshTxt();">Update Settings</button>
+		</div>
 	</div>
 	
 	<div class="row">
@@ -86,14 +97,18 @@ img {
 			<br><br>
 			<h3>Character Talking:</h3>
 			<select id="charTalk">
-			</select>
+			<option value="0">Player</option><option value="1">Male Robin</option><option value="2">Female Robin</option><option value="3">Chrom</option><option value="4">Lissa</option><option value="5">Frederick</option><option value="6">Sully</option><option value="7">Virion</option><option value="8">Stahl</option><option value="9">Vaike</option><option value="10">Miriel</option><option value="11">Sumia</option><option value="12">Kellam</option><option value="13">Donnel</option><option value="14">Lon'qu</option><option value="15">Ricken</option><option value="16">Maribelle</option><option value="17">Panne</option><option value="18">Gaius</option><option value="19">Cordelia</option><option value="20">Gregor</option><option value="21">Nowi</option><option value="22">Libra</option><option value="23">Tharja</option><option value="24">Anna</option><option value="25">Olivia</option><option value="26">Cherche</option><option value="27">Henry</option><option value="28">Lucina</option><option value="29">Say'ri</option><option value="30">Tiki</option><option value="31">Basilio</option><option value="32">Flavia</option><option value="33">Gangrel</option><option value="34">Walhart</option><option value="35">Emmeryn</option><option value="36">Yen'fay</option><option value="37">Aversa</option><option value="38">Priam</option><option value="39">Owain</option><option value="40">Inigo</option><option value="41">Brady</option><option value="42">Kjelle</option><option value="43">Cynthia</option><option value="44">Severa</option><option value="45">Gerome</option><option value="46">Morgan</option><option value="47">Yarne</option><option value="48">Laurent</option><option value="49">Noire</option><option value="50">Nah</option></select>
 			<select id="side">
-				<option value='3'>Rigth Side</option>
-				<option value='7'>Left Side</option>
+				<option value="3">Rigth Side</option>
+				<option value="7">Left Side</option>
 			</select>
 			<select id="emotion">
-			</select>
+			<option value="0">Standard</option><option value="1">Surprised</option><option value="2">Angry</option><option value="3">Suffering</option><option value="4">Laughing</option><option value="5">Great</option></select>
 			<select id="opEmotion">
+			<option value="0">None</option><option value="1">Sweat</option><option value="2">Blush</option></select>
+			<select id="screaming">
+				<option value="0">Normal Box</option>
+				<option value="1">Yelling Box</option>
 			</select>
 			<br><br>
 			<p>Write: <br> \n = line-break <br> $k$p = line-scroll <br> $Nu = Player Name </p>
@@ -107,7 +122,7 @@ img {
 	<div class="row">
 		<div class="col-md-12">
 			<br><br>
-			<textarea id="textbox" class="conversationBox" disabled></textarea> 
+			<textarea id="textbox" class="conversationBox" disabled=""></textarea> 
 			<br><br>
 		</div>
 	</div>
@@ -117,13 +132,157 @@ img {
 			<button id="create">Create file</button> 
 		</div>
 		<div class="col-md-3">
-			<a download="conversation.txt" id="downloadlink" style="display: none">Download Conversation</a>
+			<a download="リズ_username.txt" id="downloadlink" style="display: none">Download Conversation</a>
 		</div>
 		<div class="col-md-3"></div>
 	</div>
 </div>
 
+<!-- Modal BGM -->
+<div id="bgmModal" class="modal fade" role="dialog" style="display: none;">
+	<div class="modal-dialog" style="width:80%;">
+		<!-- Modal content-->
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal">×</button>
+			<h4 class="modal-title">BGM Selector</h4>
+		  </div>
+		  <div class="modal-body">
+			<form action="" id="bgmSelector">
+				<div class="row">
+					<div class="col-md-4">
+						<input type="radio" name="bgm" value="0"> "Now, that's a declaration of war!" <br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_EVT_BOURYAKU1.mp3" type="audio/mpeg">
+							</audio><br><br>
+						<input type="radio" name="bgm" value="1"> "Negotiation's not my strong suit" <br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_EVT_BRAVE1.mp3" type="audio/mpeg">
+							</audio><br><br>
+						<input type="radio" name="bgm" value="2"> "Something is very wrong" <br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_EVT_BUKIMI1.mp3" type="audio/mpeg">
+							</audio><br><br>
+						<input type="radio" name="bgm" value="3"> "Don't you put any stock in this destiny hogwash!" <br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_EVT_CHANCE1.mp3" type="audio/mpeg">
+							</audio><br><br>
+						<input type="radio" name="bgm" value="4"> "Grima has returned to slumber" <br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_EVT_HEION1.mp3" type="audio/mpeg">
+							</audio><br><br>
+						<input type="radio" name="bgm" value="5"> "But, Frederick, it's nearly dark!" <br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_EVT_HEIWA1.mp3" type="audio/mpeg">
+							</audio><br><br>
+						<input type="radio" name="bgm" value="6"> "......." <br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_EVT_HOUSHIN1.mp3" type="audio/mpeg">
+							</audio><br><br>
+						<input type="radio" name="bgm" value="7"> "Someone has to save you from your good intentions" <br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_EVT_HUON1.mp3" type="audio/mpeg">
+							</audio><br><br>
+						<input type="radio" name="bgm" value="8"> "Agh! Won goph in mah mouph! Blech! Ptooey!" <br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_EVT_ITAZURA1.mp3" type="audio/mpeg">
+							</audio><br><br>
+					</div>
+					<div class="col-md-4">
+						<input type="radio" name="bgm" value="9"> "Dry your tears, love. This is not goodbye" <br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_EVT_KETSUI1.mp3" type="audio/mpeg">
+							</audio><br><br>
+						<input type="radio" name="bgm" value="10"> "I mean it! GO!" <br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_EVT_KIKI1.mp3" type="audio/mpeg">
+							</audio><br><br>
+						<input type="radio" name="bgm" value="11"> "The life force here shall renew me!" <br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_EVT_KYOAKU1.mp3" type="audio/mpeg">
+							</audio><br><br>
+						<input type="radio" name="bgm" value="12"> "Run all you like, you can't escape fate!" <br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_EVT_KYOUDAN1.mp3" type="audio/mpeg">
+							</audio><br><br>
+						<input type="radio" name="bgm" value="13"> "You have power... like mine" <br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_EVT_LEGEND1.mp3" type="audio/mpeg">
+							</audio><br><br>
+						<input type="radio" name="bgm" value="14"> "Ha ha! Yes, it will take some getting used to!" <br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_EVT_LOVE1.mp3" type="audio/mpeg">
+							</audio><br><br>
+						<input type="radio" name="bgm" value="15"> "You may call me Marth" <br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_EVT_MARTH1.mp3" type="audio/mpeg">
+							</audio><br><br>
+						<input type="radio" name="bgm" value="16"> Id (Serenity) <br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_EVT_MYUNIT1.mp3" type="audio/mpeg">
+							</audio><br><br>
+						<input type="radio" name="bgm" value="17"> Id (Sorrow) <br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_EVT_MYUNIT2.mp3" type="audio/mpeg">
+							</audio><br><br>
+					</div>
+					<div class="col-md-4">
+						<input type="radio" name="bgm" value="18"> Id (Dilemma) <br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_EVT_MYUNIT3.mp3" type="audio/mpeg">
+							</audio><br><br>
+						<input type="radio" name="bgm" value="19"> Id (Darkness) <br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_EVT_MYUNIT4.mp3" type="audio/mpeg">
+							</audio><br><br>
+						<input type="radio" name="bgm" value="20"> "Here we are! The shepherd's garrison" <br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_EVT_NAKAMA1.mp3" type="audio/mpeg">
+							</audio><br><br>
+						<input type="radio" name="bgm" value="21"> "And what if I can't? What if I'm not worthy?" <br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_EVT_SAD1.mp3" type="audio/mpeg">
+							</audio><br><br>
+						<input type="radio" name="bgm" value="22"> "It appears the capital was spared the chaos"  <br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_EVT_SERIOUS1.mp3" type="audio/mpeg">
+							</audio><br><br>
+						<input type="radio" name="bgm" value="23"> "Such bonds are the true strenghts of this army" <br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_EVT_SERIOUS2.mp3" type="audio/mpeg">
+							</audio><br><br>
+						<input type="radio" name="bgm" value="24"> "You don't know the first thing about peace." <br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_EVT_TAIJI1.mp3" type="audio/mpeg">
+							</audio><br><br>
+						<input type="radio" name="bgm" value="25"> "Gods, have the Risen spread this far?" <br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_EVT_TAIJI2.mp3" type="audio/mpeg">
+							</audio><br><br>
+						<input type="radio" name="bgm" value="26" id="bgm26" checked="checked"> "The Vaike never forgets! I just don't always remember" <br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_EVT_TENNEN1.mp3" type="audio/mpeg">
+							</audio><br><br>
+						<input type="radio" name="bgm" value="27"> "Shh... Easy now, girl. I won't hurt you" <br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_EVT_YASASHISA1.mp3" type="audio/mpeg">
+							</audio><br><br>
+					</div>
+			
+		  </div></form>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		  </div>
+		</div>
+	</div>
+</div>
+</div>
+</body></html>
+
 <script>
+
+
+
 japaneseNames = ["username", "プレイヤー男", "プレイヤー女", "クロム", "リズ", "フレデリク", "ソワレ", "ヴィオール", "ソール", "ヴェイク", "ミリエル", "スミア", "カラム"
 , "ドニ", "ロンクー", "リヒト", "マリアベル", "ベルベット", "ガイア", "ティアモ", "グレゴ", "ノノ", "リベラ", "サーリャ", "アンナ", "オリヴィエ", "セルジュ"
 , "ヘンリー", "ルキナ", "サイリ", "チキ", "バジーリオ", "フラヴィア", "ギャンレル", "ヴァルハルト", "エメリナ", "レンハ", "インバース", "パリス", "ウード"
@@ -140,8 +299,12 @@ englishExp = ["Standard", "Surprised", "Angry", "Suffering", "Laughing", "Great"
 japaneseOpExp = ["", ",汗", ",照"];
 englishOpExp = ["None", "Sweat", "Blush"];
 
-japaneseType = ["", "_兄弟", "_親子"]
-englishType = ["Normal", "Sibling", "Parent"]
+japaneseType = ["", "_兄弟", "_親子"];
+englishType = ["Normal", "Sibling", "Parent"];
+
+bgmList = ["BOURYAKU1", "BRAVE1", "BUKIMI1", "CHANCE1", "HEION1", "HEIWA1", "HOUSHIN1", "HUON1", "ITAZURA1", "KETSUI1", "KIKI1"
+, "KYOAKU1", "KYOUDAN1", "LEGEND1", "LOVE1", "MARTH1", "MYUNIT1", "MYUNIT2", "MYUNIT3", "MYUNIT4", "NAKAMA1", "SAD1", "SERIOUS1"
+, "SERIOUS2", "TAIJI1", "TAIJI2", "TENNEN1", "YASASHISA1"];
 
 for(var i=0; i < japaneseNames.length; i++){
 	$("#char1").append('<option value=' + i + '>' + englishNames[i] + '</option>');
@@ -155,6 +318,8 @@ for(var i=0; i < japaneseOpExp.length; i++){
 	$("#opEmotion").append('<option value=' + i + '>' + englishOpExp[i] + '</option>');
 }
 
+$("#bgm26").attr('checked', 'checked');
+
 var level = $('#level').val();
 var type = $('#type').val();
 var char1 = $('#char1').val();
@@ -163,10 +328,15 @@ var charTalk = $('#charTalk').val();
 var prevCharTalk = -1;
 var transition = "";
 var charactersTalking = [];
+var screaming = $('#screaming').val();
+var bgm = $('input[name=bgm]:checked', '#bgmSelector').val();
+
+
 
 //for support title
 var supportName = "";
 var messArchive = "";
+var bgmString = "";
 //container with all the conversation
 var converContainer = [];
 
@@ -194,6 +364,15 @@ $('#charTalk').on('change', function() {
   charTalk = $(this).val();
 });
 
+$('#screaming').on('change', function() {
+  screaming = $(this).val();
+});
+
+$('#bgmSelector input').on('change', function() {
+	bgm = $('input[name=bgm]:checked', '#bgmSelector').val();
+	refreshSettings();
+});
+
 //assigns the initial settings
 refreshSettings();
 
@@ -207,12 +386,17 @@ function addGlobe(){
 	var emotion = $('#emotion').val();
 	var opEmotion = $('#opEmotion').val();
 	var sideTxt = "";
+	var boxType = "";
 	
 	if($.inArray(charTalk, charactersTalking) > -1){
 		sideTxt = "";
 	}else{
 		charactersTalking.push(charTalk);
 		sideTxt = side;
+	}
+	
+	if(screaming == 1){
+		boxType = "$Wv";
 	}
 	
 	var talking = document.getElementById("charBox").value;
@@ -233,7 +417,7 @@ function addGlobe(){
 		}
 	}
 	
-	var codeConv = transition + playerHelper + "$Wm" + japaneseNames[charTalk] + "|" + sideTxt + "$w0|$Ws" + japaneseNames[charTalk] + "|$Wa$E" + japaneseExp[emotion] + japaneseOpExp[opEmotion] + "|" + talking;
+	var codeConv = transition + playerHelper + "$Wm" + japaneseNames[charTalk] + "|" + sideTxt + "$w0|$Ws" + japaneseNames[charTalk] + "|$Wa$E" + japaneseExp[emotion] + japaneseOpExp[opEmotion] + "|" + boxType + talking;
 	
 	if(side == 3){
 		document.getElementById("conversationFull").innerHTML += "<div class='row'>"
@@ -257,6 +441,8 @@ function refreshTxt(){
 	document.getElementById("textbox").value += messArchive + "\n";
 	
 	document.getElementById("textbox").value += supportName;
+	document.getElementById("textbox").value += bgmString;
+	
 	
 	for(var x=0; x < converContainer.length; x++){
 		document.getElementById("textbox").value += converContainer[x];
@@ -266,6 +452,8 @@ function refreshTxt(){
 function refreshSettings(){
 	messArchive = "MESS_ARCHIVE_" + japaneseNames[char1] + "_" + japaneseNames[char2] + japaneseType[type];
 	supportName = "MID_支援_" + japaneseNames[char1] + "_" + japaneseNames[char2] + japaneseType[type] + "_" + level + ": ";
+	bgmString = "$SbpSTRM_BGM_EVT_" + bgmList[bgm] + "|0|$t1";
+	
 	document.getElementById("downloadlink").download = japaneseNames[char1] + "_" + japaneseNames[char2] + japaneseType[type] + ".txt";
 }
 
