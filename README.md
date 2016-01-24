@@ -34,4 +34,4 @@ Just unzip and open the Index.html (tested in Google Chrome, Mozilla Firefox, Mi
 ------Notes:------ 
 
 
-All images are property of Nintendo and Intelligent Systems. I don't claim ownership of any of them.
+All images and sounds are property of Nintendo and Intelligent Systems. I don't claim ownership of any of them.
