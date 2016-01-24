@@ -1,10 +1,12 @@
 # FE_A_conv
 A Fire Emblem Awakening Conversation Generator
 
-Installing:
+------Installing:------
 Just unzip and open the Index.html
 
-Usage: 
+------Usage:------ 
+
+
 1) Configure the General Settings (support level, type, characters talking).
 
 
