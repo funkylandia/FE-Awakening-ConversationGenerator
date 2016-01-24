@@ -5,6 +5,10 @@ A Fire Emblem Awakening Conversation Generator
 
 Just unzip and open the Index.html (tested in Google Chrome, Mozilla Firefox, Microsoft Edge)
 
+Unzip these files next to the index.html:
+
+http://www.mediafire.com/download/wj1xwwpz9wq32cb/FE_ConversationCreator_Resources.zip
+
 ------Usage:------ 
 
 
