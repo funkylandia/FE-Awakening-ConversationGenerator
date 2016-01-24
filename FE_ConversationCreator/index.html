@@ -1,0 +1,307 @@
+<meta http-equiv="Content-Type" content="text/html; charset= utf-8 ">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-7s5uDGW3AHqw6xtJmNNtr+OBRJUlgkNJEo78P4b0yRw= sha512-nNo+yCHEyn0smMxSswnf/OnX6/KwJuZTlNZBjauKhTK0c+zT+q5JOCx0UFhXQ6rJR9jg6Es8gPuD2uZcYDLqSw==" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha256-KXn5puMvxCw+dAYznun+drMdG1IFl3agK0p/pqT9KAo= sha512-2e8qq0ETcfWRI4HJBzQiA3UoyFk6tbNyG+qSaIBZLyW9Xf3sWZHN/lxe9fTh1U45DpPf07yj94KsUHHWe4Yk1A==" crossorigin="anonymous"></script>
+
+<style>
+.conversationBox {
+	width:1150px;
+	height:200px;
+}
+
+.charBox {
+	width:450px;
+	height:100px;
+}
+
+img {
+	height:80px;
+}
+
+.imgFlip {
+	-moz-transform: scaleX(-1);
+	-o-transform: scaleX(-1);
+	-webkit-transform: scaleX(-1);
+	transform: scaleX(-1);
+	filter: FlipH;
+	-ms-filter: "FlipH";
+}
+
+.conversationFull {
+	overflow: scroll;
+    height: 400px;
+}
+</style>
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-6">
+			<h2>FE:A Conversation Creator by Funky</h2>
+			<h3>General Settings:</h3>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-md-3">
+			<p>Support Level:</p>
+			<select id="level">
+				<option value="C">C</option>
+				<option value="B">B</option>
+				<option value="A">A</option>
+				<option value="S">S</option>
+			</select>
+		</div>
+		
+		<div class="col-md-3">
+			<p>Support Type:</p>
+			<select id="type">
+				<option value="0">Normal</option>
+				<option value="1">Sibling</option>
+				<option value="2">Parent</option>
+			</select>
+		</div>
+		
+		<div class="col-md-3">
+			<p>Character 1:</p>
+			<select id="char1">
+			</select>
+		</div>
+		
+		<div class="col-md-3">
+			<p>Character 2:</p>
+			<select id="char2">
+			</select>
+		</div>
+		
+	</div>
+	
+	<div class="row">
+		<div class="col-md-6">
+			<br><br><br>
+			<div id="conversationFull" class="conversationFull">
+			</div>
+		</div>
+		
+		<div class="col-md-6">
+			<br><br>
+			<h3>Character Talking:</h3>
+			<select id="charTalk">
+			</select>
+			<select id="side">
+				<option value='3'>Rigth Side</option>
+				<option value='7'>Left Side</option>
+			</select>
+			<select id="emotion">
+			</select>
+			<select id="opEmotion">
+			</select>
+			<br><br>
+			<p>Write: <br> \n = line-break <br> $k$p = line-scroll <br> $Nu = Player Name </p>
+			<br>
+			<textarea id="charBox" class="charBox"></textarea>
+			
+			<br><br><button onclick="addGlobe();">Add</button><br><br>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-md-12">
+			<br><br>
+			<textarea id="textbox" class="conversationBox" disabled></textarea> 
+			<br><br>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-3"></div>
+		<div class="col-md-3">
+			<button id="create">Create file</button> 
+		</div>
+		<div class="col-md-3">
+			<a download="conversation.txt" id="downloadlink" style="display: none">Download Conversation</a>
+		</div>
+		<div class="col-md-3"></div>
+	</div>
+</div>
+
+<script>
+japaneseNames = ["username", "プレイヤー男", "プレイヤー女", "クロム", "リズ", "フレデリク", "ソワレ", "ヴィオール", "ソール", "ヴェイク", "ミリエル", "スミア", "カラム"
+, "ドニ", "ロンクー", "リヒト", "マリアベル", "ベルベット", "ガイア", "ティアモ", "グレゴ", "ノノ", "リベラ", "サーリャ", "アンナ", "オリヴィエ", "セルジュ"
+, "ヘンリー", "ルキナ", "サイリ", "チキ", "バジーリオ", "フラヴィア", "ギャンレル", "ヴァルハルト", "エメリナ", "レンハ", "インバース", "パリス", "ウード"
+, "アズール", "ブレディ", "デジェル", "シンシア", "セレナ", "ジェローム", "マーク", "シャンブレー", "ロラン", "ノワール", "ンン"];
+
+englishNames = ["Player", "Male Robin", "Female Robin", "Chrom", "Lissa", "Frederick", "Sully", "Virion", "Stahl", "Vaike", "Miriel", "Sumia", "Kellam",
+"Donnel", "Lon'qu", "Ricken", "Maribelle", "Panne", "Gaius", "Cordelia", "Gregor", "Nowi", "Libra", "Tharja", "Anna", "Olivia", "Cherche"
+, "Henry", "Lucina", "Say'ri", "Tiki", "Basilio", "Flavia", "Gangrel", "Walhart", "Emmeryn", "Yen'fay", "Aversa", "Priam", "Owain"
+, "Inigo", "Brady", "Kjelle", "Cynthia", "Severa", "Gerome", "Morgan", "Yarne", "Laurent", "Noire", "Nah"];
+
+japaneseExp = ["通常", "びっくり", "怒", "苦", "笑", "キメ"];
+englishExp = ["Standard", "Surprised", "Angry", "Suffering", "Laughing", "Great"];
+
+japaneseOpExp = ["", ",汗", ",照"];
+englishOpExp = ["None", "Sweat", "Blush"];
+
+japaneseType = ["", "_兄弟", "_親子"]
+englishType = ["Normal", "Sibling", "Parent"]
+
+for(var i=0; i < japaneseNames.length; i++){
+	$("#char1").append('<option value=' + i + '>' + englishNames[i] + '</option>');
+	$("#char2").append('<option value=' + i + '>' + englishNames[i] + '</option>');
+	$("#charTalk").append('<option value=' + i + '>' + englishNames[i] + '</option>');
+}
+for(var i=0; i < japaneseExp.length; i++){
+	$("#emotion").append('<option value=' + i + '>' + englishExp[i] + '</option>');
+}
+for(var i=0; i < japaneseOpExp.length; i++){
+	$("#opEmotion").append('<option value=' + i + '>' + englishOpExp[i] + '</option>');
+}
+
+var level = $('#level').val();
+var type = $('#type').val();
+var char1 = $('#char1').val();
+var char2 = $('#char2').val();
+var charTalk = $('#charTalk').val();
+var prevCharTalk = -1;
+var transition = "";
+var charactersTalking = [];
+
+//for support title
+var supportName = "";
+var messArchive = "";
+//container with all the conversation
+var converContainer = [];
+
+$('#level').on('change', function() {
+  level = $(this).val();
+  refreshSettings();
+});
+
+$('#type').on('change', function() {
+  type = $(this).val();
+  refreshSettings();
+});
+
+$('#char1').on('change', function() {
+  char1 = $(this).val();
+  refreshSettings();
+});
+
+$('#char2').on('change', function() {
+  char2 = $(this).val();
+  refreshSettings();
+});
+
+$('#charTalk').on('change', function() {
+  charTalk = $(this).val();
+});
+
+//assigns the initial settings
+refreshSettings();
+
+function addGlobe(){
+	var currentChar = englishNames[charTalk].toLowerCase();
+	currentChar = currentChar.replace(/\s/g, '');
+	currentChar = currentChar.replace(/'/g, '');
+	var img = "img/" + currentChar + ".png";
+	
+	var side = $('#side').val();
+	var emotion = $('#emotion').val();
+	var opEmotion = $('#opEmotion').val();
+	var sideTxt = "";
+	
+	if($.inArray(charTalk, charactersTalking) > -1){
+		sideTxt = "";
+	}else{
+		charactersTalking.push(charTalk);
+		sideTxt = side;
+	}
+	
+	var talking = document.getElementById("charBox").value;
+	
+	var playerHelper = "";
+	if(talking.indexOf("$Nu") > -1){
+		playerHelper = "$a";
+	}
+	
+	//If there's no previous character
+	if(prevCharTalk == -1){
+		transition = "";
+	}else{
+		if(englishNames[charTalk] == englishNames[prevCharTalk]){ //if previous character is the same
+			transition = "$k$p";
+		}else{// if previous character is different
+			transition = "$k\\n";
+		}
+	}
+	
+	var codeConv = transition + playerHelper + "$Wm" + japaneseNames[charTalk] + "|" + sideTxt + "$w0|$Ws" + japaneseNames[charTalk] + "|$Wa$E" + japaneseExp[emotion] + japaneseOpExp[opEmotion] + "|" + talking;
+	
+	if(side == 3){
+		document.getElementById("conversationFull").innerHTML += "<div class='row'>"
+		+ "<div class='col-md-3'><img src='" + img + "' class='imgFlip' /></div>"
+		+ "<div class='col-md-9'><p>" + codeConv + "</p></div></div>";
+	}else{
+		document.getElementById("conversationFull").innerHTML += "<div class='row'>"
+		+ "<div class='col-md-9'><p style='text-align:right;'>" + codeConv + "</p></div>"
+		+ "<div class='col-md-3'><img src='" + img + "' /></div></div>";
+	}
+	
+	converContainer.push(codeConv);
+	
+	refreshTxt();
+	document.getElementById("charBox").value = "";
+	prevCharTalk = charTalk;
+}
+
+function refreshTxt(){
+	document.getElementById("textbox").value = "";
+	document.getElementById("textbox").value += messArchive + "\n";
+	
+	document.getElementById("textbox").value += supportName;
+	
+	for(var x=0; x < converContainer.length; x++){
+		document.getElementById("textbox").value += converContainer[x];
+	}
+}
+
+function refreshSettings(){
+	messArchive = "MESS_ARCHIVE_" + japaneseNames[char1] + "_" + japaneseNames[char2] + japaneseType[type];
+	supportName = "MID_支援_" + japaneseNames[char1] + "_" + japaneseNames[char2] + japaneseType[type] + "_" + level + ": ";
+	document.getElementById("downloadlink").download = japaneseNames[char1] + "_" + japaneseNames[char2] + japaneseType[type] + ".txt";
+}
+
+function endConversation(){
+	document.getElementById("textbox").value += "$k\\n$Sbs1000|";
+}
+</script>
+
+<script>
+<!-- Generate text file script -->
+
+(function () {
+	var textFile = null,
+	makeTextFile = function (text) {
+		var data = new Blob([text], {type: 'text/plain'});
+
+		// If we are replacing a previously generated file we need to
+		// manually revoke the object URL to avoid memory leaks.
+		if (textFile !== null) {
+		  window.URL.revokeObjectURL(textFile);
+		}
+
+		textFile = window.URL.createObjectURL(data);
+
+		return textFile;
+	};
+
+
+	var create = document.getElementById('create'),
+    textbox = document.getElementById('textbox');
+
+	create.addEventListener('click', function () {
+		endConversation();
+		var link = document.getElementById('downloadlink');
+		link.href = makeTextFile(textbox.value);
+		link.style.display = 'block';
+	}, false);
+})();
+</script>
