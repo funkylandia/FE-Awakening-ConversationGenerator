@@ -27,3 +27,11 @@ Just unzip and open the Index.html (tested in Google Chrome, Mozilla Firefox, Mi
 
 
 7) Enjoy!
+
+
+
+
+------Notes:------ 
+
+
+All images are property of Nintendo and Intelligent Systems. I don't claim ownership of any of them.
