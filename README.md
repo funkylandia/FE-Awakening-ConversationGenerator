@@ -2,7 +2,7 @@
 A Fire Emblem Awakening Conversation Generator
 
 ------Installing:------
-Just unzip and open the Index.html
+Just unzip and open the Index.html (tested in Google Chrome, Mozilla Firefox, Microsoft Edge)
 
 ------Usage:------ 
 
