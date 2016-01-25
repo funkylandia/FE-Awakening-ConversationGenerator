@@ -33,7 +33,9 @@ img {
 }
 </style>
 
-</head><body class=""><div class="container">
+</head>
+<body class="">
+<div class="container">
 	<div class="row">
 		<div class="col-md-6">
 			<h2>FE:A Conversation Creator by Funky</h2>
@@ -115,7 +117,7 @@ img {
 			<br>
 			<textarea id="charBox" class="charBox"></textarea>
 			
-			<br><br><button onclick="addGlobe();">Add</button><br><br>
+			<br><br><button onclick="addGlobe(-1);">Add</button><button class="btn btn-info" id="saveButton" style="visibility:hidden;">Save Edit</button><br><br>
 		</div>
 	</div>
 	
@@ -280,9 +282,6 @@ img {
 </body></html>
 
 <script>
-
-
-
 japaneseNames = ["username", "プレイヤー男", "プレイヤー女", "クロム", "リズ", "フレデリク", "ソワレ", "ヴィオール", "ソール", "ヴェイク", "ミリエル", "スミア", "カラム"
 , "ドニ", "ロンクー", "リヒト", "マリアベル", "ベルベット", "ガイア", "ティアモ", "グレゴ", "ノノ", "リベラ", "サーリャ", "アンナ", "オリヴィエ", "セルジュ"
 , "ヘンリー", "ルキナ", "サイリ", "チキ", "バジーリオ", "フラヴィア", "ギャンレル", "ヴァルハルト", "エメリナ", "レンハ", "インバース", "パリス", "ウード"
@@ -376,7 +375,7 @@ $('#bgmSelector input').on('change', function() {
 //assigns the initial settings
 refreshSettings();
 
-function addGlobe(){
+function addGlobe(addType){
 	var currentChar = englishNames[charTalk].toLowerCase();
 	currentChar = currentChar.replace(/\s/g, '');
 	currentChar = currentChar.replace(/'/g, '');
@@ -419,21 +418,45 @@ function addGlobe(){
 	
 	var codeConv = transition + playerHelper + "$Wm" + japaneseNames[charTalk] + "|" + sideTxt + "$w0|$Ws" + japaneseNames[charTalk] + "|$Wa$E" + japaneseExp[emotion] + japaneseOpExp[opEmotion] + "|" + boxType + talking;
 	
-	if(side == 3){
-		document.getElementById("conversationFull").innerHTML += "<div class='row'>"
-		+ "<div class='col-md-3'><img src='" + img + "' class='imgFlip' /></div>"
-		+ "<div class='col-md-9'><p>" + codeConv + "</p></div></div>";
-	}else{
-		document.getElementById("conversationFull").innerHTML += "<div class='row'>"
-		+ "<div class='col-md-9'><p style='text-align:right;'>" + codeConv + "</p></div>"
-		+ "<div class='col-md-3'><img src='" + img + "' /></div></div>";
+	var talkingFix = talking.toString().replace(/'/g, "&#39;");
+	var idNumber = converContainer.length;
+	
+	if(addType > -1){
+		idNumber = addType;
 	}
 	
-	converContainer.push(codeConv);
+	var globeId = "globe" + idNumber;
+	
+	if(addType == -1){ //if it's a new text globe
+		if(side == 3){
+			document.getElementById("conversationFull").innerHTML += "<div class='row' id='" + globeId + "'>"
+			+ "<div class='col-md-3'><a onclick='deleteGlobe(\"" + idNumber + "\")'>[Delete]</a>"
+			+ "<a onclick='editGlobe(" + idNumber + "," + charTalk + "," + side + "," + emotion + "," + opEmotion + "," + screaming + ",\"" + talkingFix + "\")'>[Edit]</a><img src='" + img + "' class='imgFlip' /></div>"
+			+ "<div class='col-md-9'><p>" + codeConv + "</p></div></div>";
+		}else{
+			document.getElementById("conversationFull").innerHTML += "<div class='row' id='" + globeId + "'>"
+			+ "<div class='col-md-9'><p style='text-align:right;'>" + codeConv + "</p></div>"
+			+ "<div class='col-md-3'><a onclick='deleteGlobe(\"" + idNumber + "\")'>[Delete]</a>"
+			+"<a onclick='editGlobe(" + idNumber + "," + charTalk + "," + side + "," + emotion + "," + opEmotion + "," + screaming + ",\"" + talkingFix + "\")'>[Edit]</a><img src='" + img + "' /></div></div>";
+		}
+		converContainer.push(codeConv);
+		prevCharTalk = charTalk;
+	}else{
+		//if it's an existing text globe
+		converContainer[addType] = codeConv;
+		if(side == 3){
+			document.getElementById(globeId).innerHTML = "<div class='col-md-3'><a onclick='deleteGlobe(\"" + idNumber + "\")'>[Delete]</a>"
+			+ "<a onclick='editGlobe(" + idNumber + "," + charTalk + "," + side + "," + emotion + "," + opEmotion + "," + screaming + ",\"" + talkingFix + "\")'>[Edit]</a><img src='" + img + "' class='imgFlip' /></div>"
+			+ "<div class='col-md-9'><p>" + codeConv + "</p></div>";
+		}else{
+			document.getElementById(globeId).innerHTML = "<div class='col-md-9'><p style='text-align:right;'>" + codeConv + "</p></div>"
+			+ "<div class='col-md-3'><a onclick='deleteGlobe(\"" + idNumber + "\")'>[Delete]</a>"
+			+"<a onclick='editGlobe(" + idNumber + "," + charTalk + "," + side + "," + emotion + "," + opEmotion + "," + screaming + ",\"" + talkingFix + "\")'>[Edit]</a><img src='" + img + "' /></div>";
+		}
+	}
 	
 	refreshTxt();
 	document.getElementById("charBox").value = "";
-	prevCharTalk = charTalk;
 }
 
 function refreshTxt(){
@@ -447,6 +470,29 @@ function refreshTxt(){
 	for(var x=0; x < converContainer.length; x++){
 		document.getElementById("textbox").value += converContainer[x];
 	}
+}
+
+function deleteGlobe(id){
+	converContainer[id] = "";
+	$("#globe" + id).remove();
+	refreshTxt();
+}
+
+function editGlobe(id, whichChar, whichSide, whichEmotion, whichOpEmotion, whichScreaming, whichTalk){
+	console.log(id);
+	$('#charTalk').val(whichChar);
+	$('#side').val(whichSide);
+	$('#emotion').val(whichEmotion);
+	$('#opEmotion').val(whichOpEmotion);
+	$('#screaming').val(whichScreaming);
+	document.getElementById("charBox").value = whichTalk;
+	document.getElementById("saveButton").style.visibility = "visible";
+	document.getElementById("saveButton").onclick = function() { saveGlobe(id); };
+}
+
+function saveGlobe(id){
+	document.getElementById("saveButton").style.visibility = "hidden";
+	addGlobe(id);
 }
 
 function refreshSettings(){
