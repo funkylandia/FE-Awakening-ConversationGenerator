@@ -1,0 +1,22 @@
+Fire Emblem Awakening Conversation Creator Changelog
+
+
+
+------Version 1.01------
+
+- Fixed minor typos and clarified spelling
+
+- Added all Fire Emblem Awakening background music tracks, reorganized in order they appear in the ingame Sound Test.
+
+- Left and Right side character portraits were reversed in webpage, making it confusing to read. They were oriented properly.
+
+- Changed font in text entry box to Chiaro, the font Fire Emblem Awakening uses.
+
+- Renamed "index.html" to "FE_A_conversation_generator.html" for ease of indentifying the program.
+
+- Added a changelog, which you're reading right now!
+
+
+------Version 1.00------
+
+- Inital Release
