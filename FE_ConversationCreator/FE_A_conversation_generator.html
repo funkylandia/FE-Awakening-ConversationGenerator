@@ -1,0 +1,817 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset= utf-8 ">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-7s5uDGW3AHqw6xtJmNNtr+OBRJUlgkNJEo78P4b0yRw= sha512-nNo+yCHEyn0smMxSswnf/OnX6/KwJuZTlNZBjauKhTK0c+zT+q5JOCx0UFhXQ6rJR9jg6Es8gPuD2uZcYDLqSw==" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha256-KXn5puMvxCw+dAYznun+drMdG1IFl3agK0p/pqT9KAo= sha512-2e8qq0ETcfWRI4HJBzQiA3UoyFk6tbNyG+qSaIBZLyW9Xf3sWZHN/lxe9fTh1U45DpPf07yj94KsUHHWe4Yk1A==" crossorigin="anonymous"></script>
+
+<style>
+@font-face {
+    font-family: "Chiaro";
+    src: url("assets/FOT_Chiaro_STB_Bold.otf");
+}
+
+.conversationBox {
+	width:1150px;
+	height:200px;
+}
+
+.charBox {
+	width:450px;
+	height:100px;
+	font-family: "Chiaro";
+}
+
+img {
+	height:80px;
+}
+
+.imgFlip {
+	-moz-transform: scaleX(-1);
+	-o-transform: scaleX(-1);
+	-webkit-transform: scaleX(-1);
+	transform: scaleX(-1);
+	filter: FlipH;
+	-ms-filter: "FlipH";
+}
+
+.conversationFull {
+	overflow: scroll;
+    height: 400px;
+}
+
+</style>
+
+</head>
+<body class="">
+<div class="container">
+	<div class="row">
+		<div class="col-md-6">
+			<h1>Fire Emblem Awakening Conversation Creator</h1>
+			<h2>by Funky<h2>
+			<br><br>
+			<h3>General Settings:</h3>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-md-3">
+			<p>Support Level:</p>
+			<select id="level">
+				<option value="C">C</option>
+				<option value="B">B</option>
+				<option value="A">A</option>
+				<option value="S">S</option>
+			</select>
+		</div>
+		
+		<div class="col-md-3">
+			<p>Support Type:</p>
+			<select id="type">
+				<option value="0">No Blood Relation (Default)</option>
+				<option value="1">Sibling</option>
+				<option value="2">Parent</option>
+			</select>
+		</div>
+		
+		<div class="col-md-3">
+			<p>Character 1:</p>
+			<select id="char1">
+			</select>
+		</div>
+		
+		<div class="col-md-3">
+			<p>Character 2:</p>
+			<select id="char2">
+			</select>
+		</div>
+		
+	</div>
+	
+	<div class="row">
+		<div class="col-md-6">
+			<br>
+			<button type="button" data-toggle="modal" data-target="#bgmModal">Select Background Music</button>
+		</div>
+		<div class="col-md-6">
+			<br>
+			<button type="button" class="btn btn-info" onclick="refreshTxt();">Update Settings</button>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-md-6">
+			<br><br><br>
+			<div id="conversationFull" class="conversationFull">
+			</div>
+		</div>
+		
+		<div class="col-md-6">
+			<br><br>
+			<h3>Character Talking:</h3>
+			<select id="charTalk">
+			</select>
+			<select id="side">
+				<option value="3">Right Side</option>
+				<option value="7">Left Side</option>
+			</select>
+			<select id="emotion">
+			</select>
+			<select id="opEmotion">
+			</select>
+			<select id="screaming">
+				<option value="0">Normal Box</option>
+				<option value="1">Yelling Box</option>
+			</select>
+			<br><br>
+			<p>Write: <br> \n = line-break <br> $k$p = line-scroll <br> $Nu = Player Name </p>
+			<br>
+			<textarea id="charBox" class="charBox"></textarea>
+			<br><br><button onclick="addGlobe(-1);">Add</button><button class="btn btn-info" id="saveButton" style="visibility:hidden;">Save Edit</button><br><br>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-md-12">
+			<br><br>
+			<textarea id="textbox" class="conversationBox" disabled=""></textarea> 
+			<br><br>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-3"></div>
+		<div class="col-md-3">
+			<button id="create">Create file</button> 
+		</div>
+		<div class="col-md-3">
+			<a download="リズ_username.txt" class="btn btn-info"id="downloadlink" style="display: none;align:right;">Download Conversation</a>
+		</div>
+		<div class="col-md-3"></div>
+	</div>
+</div>
+
+<!-- Modal BGM -->
+<div id="bgmModal" class="modal fade" role="dialog" style="display: none;">
+	<div class="modal-dialog" style="width:50%;">
+		<!-- Modal content-->
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal">×</button>
+			<h4 class="modal-title">Choose your support's background music.</h4>
+		  </div>
+		  <div class="modal-body">
+			<form action="" id="bgmSelector">
+				<div class="row">
+					<div class="col-md-4">
+					
+							<input type="radio" name="bgm" value="0">Divine Decree<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_MAP_BATTLE1.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="1">Divine Decree (Ablaze)<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_MAP_BATTLE1T.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="2">Prelude<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_MAP_BATTLE2.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="3">Prelude (Ablaze)<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_MAP_BATTLE2T.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="4">Conquest<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_MAP_BATTLE3.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="5">Conquest (Ablaze)<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_MAP_BATTLE3T.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="6">Chaos<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_MAP_BATTLE4.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="7">Chaos (Ablaze)<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_MAP_BATTLE4T.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="8">Destiny<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_MAP_BATTLE5.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="9">Destiny (Ablaze)<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_MAP_BATTLE5T.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="10">Storm Clouds<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_MAP_BATTLE6.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="11">Storm Clouds (Ablaze)<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_MAP_BATTLE6T.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="12">Duty<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_MAP_BATTLE7.mp3" type="audio/mpeg">
+							</audio><br><br>
+														
+							<input type="radio" name="bgm" value="13">Duty (Ablaze)<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_MAP_BATTLE7T.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="14">Champion<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_MAP_BATTLE8.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="15">Champion (Ablaze)<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_MAP_BATTLE8T.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="16">Aggression<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_MAP_BATTLE_ENEMY1.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="17">Aggression (Galvanized)<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_MAP_BATTLE_ENEMY1T.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="18">Annihilation<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_MAP_BATTLE_ENEMY2.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="19">Annihilation (Galvanized)<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_MAP_BATTLE_ENEMY2T.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="20">Assault<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_MAP_BATTLE_ENEMY3.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="21">Assault (Galvanized)<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_MAP_BATTLE_ENEMY3T.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="22">Training<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_MAP_BATTLE_OTHER1.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="23">Training (Galvanized)<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_MAP_BATTLE_OTHER1T.mp3" type="audio/mpeg">
+							</audio><br><br>
+
+							<input type="radio" name="bgm" value="24">Miscreant (Intro)<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_BOSS1_INTRO.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="25">Miscreant<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_BOSS1.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="26">Monstrosity (Intro)<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_BOSS2_INTRO.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="27">Monstrosity<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_BOSS2.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="28">Malefactor (Intro)<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_BOSS3_INTRO.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="29">Malefactor<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_BOSS3.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="30">Menace (Intro)<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_BOSS4_INTRO.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="31">Menace<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_BOSS4.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="32">Rival (Intro)<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_BOSS5_INTRO.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="33">Rival<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_BOSS5.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="34">Mastermind (Intro)<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_BOSS6_INTRO.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="35">Mastermind<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_BOSS6.mp3" type="audio/mpeg">
+							</audio><br><br>
+														
+							<input type="radio" name="bgm" value="36">Misericorde<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_BOSS7_INTRO.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="37">Id (Return)<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_MAP10_INTRO.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="38">Id (Purpose)<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_MAP10.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="39">"Don't speak her name!"<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_MAP11.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="40">"Now that's a declaration of war if I've ever heard one!"<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_EVT_BOURYAKU1.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="41">"Negotiation's not my strong suit..."<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_EVT_BRAVE1.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="42">"Something is very wrong."<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_EVT_BUKIMI1.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="43">"Don't you put any stock in this destiny hogwash!"<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_EVT_CHANCE1.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="44">"But, Frederick, it's nearly dark!"<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_EVT_HEIWA1.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="45">"Grima has returned to slumber."<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_EVT_HEION1.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="46">"......"<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_EVT_HOUSHIN1.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="47">"Someone has to save you from your good intentions."<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_EVT_HUON1.mp3" type="audio/mpeg">
+							</audio><br><br>
+														
+							<input type="radio" name="bgm" value="48">"Agh! Won goph in mah mouph! Blech! Ptooey!"<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_EVT_ITAZURA1.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="49">"Dry your tears, love. This is not good-bye."<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_EVT_KETSUI1.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="50">"I mean it. Go!"<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_EVT_KIKI1.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="51">"The life force here shall renew me!"<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_EVT_KYOAKU1.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="52">"Run all you like―you can't escape fate."<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_EVT_KYOUDAN1.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="53">"You have power... like mine."<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_EVT_LEGEND1.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="54">"Ha ha! Yes, it will take some getting used to!"<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_EVT_LOVE1.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="55">"Here we are! The Shepherds' garrison."<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_EVT_NAKAMA1.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="56">"And what if I can't? What if I'm not worthy of her ideals?"<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_EVT_SAD1.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="57">"It appears the capital was spared the chaos."<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_EVT_SERIOUS1.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="58">"Such bonds are the true strength of this army."<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_EVT_SERIOUS2.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="59">"You don't know the first thing about peace. No man does!"<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_EVT_TAIJI1.mp3" type="audio/mpeg">
+							</audio><br><br>
+														
+							<input type="radio" name="bgm" value="60">"Gods, have the Risen spread this far?"<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_EVT_TAIJI2.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="61" checked="checked">"The Vaike never forgets! I just don't always remember."<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_EVT_TENNEN1.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="62">"Shhh... Easy now, girl. I won't hurt you."<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_EVT_YASASHISA1.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="63">"You may call me Marth."<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_EVT_MARTH1.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="64">Id (Serenity)<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_EVT_MYUNIT1.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="65">Id (Sorrow)<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_EVT_MYUNIT2.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="66">Id (Dilemma)<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_EVT_MYUNIT3.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="67">Id (Darkness)<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_EVT_MYUNIT4.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="68">"We'd best prepare for combat, just to be safe."<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_SYS_BASE1.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="69">"We should turn in for the night."<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_SYS_MYROOM1.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="70">"Oh, it's not so bad, Lissa. Just a healthy little walk!"<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_SYS_GMAP1.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="71">"Farewell...my friends..."<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_SYS_DEAD1.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="72">"I've never seen one fall so gracefully."<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_SYS_GAMEOVER1.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="73">"Let's see what I'm capable of now."<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_SYS_CC2.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="74">"I carry only the finest."<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_SYS_SHOP1.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="75">"Open for business!"<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_SYS_SHOP2.mp3" type="audio/mpeg">
+							</audio><br><br>
+							
+							<input type="radio" name="bgm" value="76">Id (Beginnings)<br>
+							<audio controls="">
+								<source src="bgm/STRM_BGM_SYS_MENU1.mp3" type="audio/mpeg">
+							</audio><br><br>
+					</div>
+					</form>
+		  <div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		  </div>
+		</div>
+	</div>
+</div>
+</div>
+</body></html>
+
+<script>
+japaneseNames = ["username", "username", "プレイヤー男", "プレイヤー女", "クロム", "リズ", "フレデリク", "ソワレ", "ヴィオール", "ソール", "ヴェイク", "ミリエル", "スミア", "カラム"
+, "ドニ", "ロンクー", "リヒト", "マリアベル", "ベルベット", "ガイア", "ティアモ", "グレゴ", "ノノ", "リベラ", "サーリャ", "アンナ", "オリヴィエ", "セルジュ"
+, "ヘンリー", "ルキナ", "サイリ", "チキ", "バジーリオ", "フラヴィア", "ギャンレル", "ヴァルハルト", "エメリナ", "レンハ", "インバース", "パリス", "ウード"
+, "アズール", "ブレディ", "デジェル", "シンシア", "セレナ", "ジェローム", "マーク", "シャンブレー", "ロラン", "ノワール", "ンン"];
+
+englishNames = ["Player Male", "Player Female", "Male Robin", "Female Robin", "Chrom", "Lissa", "Frederick", "Sully", "Virion", "Stahl", "Vaike", "Miriel", "Sumia", "Kellam",
+"Donnel", "Lon'qu", "Ricken", "Maribelle", "Panne", "Gaius", "Cordelia", "Gregor", "Nowi", "Libra", "Tharja", "Anna", "Olivia", "Cherche"
+, "Henry", "Lucina", "Say'ri", "Tiki", "Basilio", "Flavia", "Gangrel", "Walhart", "Emmeryn", "Yen'fay", "Aversa", "Priam", "Owain"
+, "Inigo", "Brady", "Kjelle", "Cynthia", "Severa", "Gerome", "Morgan", "Yarne", "Laurent", "Noire", "Nah"];
+
+japaneseExp = ["通常", "びっくり", "怒", "苦", "笑", "キメ"];
+englishExp = ["Standard", "Surprised", "Angry", "Suffering", "Laughing", "Great"];
+
+japaneseOpExp = ["", ",汗", ",照"];
+englishOpExp = ["None", "Sweat", "Blush"];
+
+japaneseType = ["", "_兄弟", "_親子"];
+englishType = ["Normal", "Sibling", "Parent"];
+
+bgmList = ["MID_曲名_STRM_BGM_MAP_BATTLE1", "MID_曲名_STRM_BGM_MAP_BATTLE1T", "MID_曲名_STRM_BGM_MAP_BATTLE2", "MID_曲名_STRM_BGM_MAP_BATTLE2T", "MID_曲名_STRM_BGM_MAP_BATTLE3", "MID_曲名_STRM_BGM_MAP_BATTLE3T", "MID_曲名_STRM_BGM_MAP_BATTLE4", "MID_曲名_STRM_BGM_MAP_BATTLE4T", "MID_曲名_STRM_BGM_MAP_BATTLE5", "MID_曲名_STRM_BGM_MAP_BATTLE5T", "MID_曲名_STRM_BGM_MAP_BATTLE6", "MID_曲名_STRM_BGM_MAP_BATTLE6T", "MID_曲名_STRM_BGM_MAP_BATTLE7", "MID_曲名_STRM_BGM_MAP_BATTLE7T", "MID_曲名_STRM_BGM_MAP_BATTLE8", "MID_曲名_STRM_BGM_MAP_BATTLE8T", "MID_曲名_STRM_BGM_MAP_BATTLE_ENEMY1", "MID_曲名_STRM_BGM_MAP_BATTLE_ENEMY1T", "MID_曲名_STRM_BGM_MAP_BATTLE_ENEMY2", "MID_曲名_STRM_BGM_MAP_BATTLE_ENEMY2T", "MID_曲名_STRM_BGM_MAP_BATTLE_ENEMY3", "MID_曲名_STRM_BGM_MAP_BATTLE_ENEMY3T", "MID_曲名_STRM_BGM_MAP_BATTLE_OTHER1", "MID_曲名_STRM_BGM_MAP_BATTLE_OTHER1T", "MID_曲名_STRM_BGM_BOSS1_INTRO", "MID_曲名_STRM_BGM_BOSS1", "MID_曲名_STRM_BGM_BOSS2_INTRO", "MID_曲名_STRM_BGM_BOSS2", "MID_曲名_STRM_BGM_BOSS3_INTRO", "MID_曲名_STRM_BGM_BOSS3", "MID_曲名_STRM_BGM_BOSS4_INTRO", "MID_曲名_STRM_BGM_BOSS4", "MID_曲名_STRM_BGM_BOSS5_INTRO", "MID_曲名_STRM_BGM_BOSS5", "MID_曲名_STRM_BGM_BOSS6_INTRO", "MID_曲名_STRM_BGM_BOSS6", "MID_曲名_STRM_BGM_BOSS7_INTRO", "MID_曲名_STRM_BGM_MAP10_INTRO", "MID_曲名_STRM_BGM_MAP10", "MID_曲名_STRM_BGM_MAP11", "MID_曲名_STRM_BGM_EVT_BOURYAKU1", "MID_曲名_STRM_BGM_EVT_BRAVE1", "MID_曲名_STRM_BGM_EVT_BUKIMI1", "MID_曲名_STRM_BGM_EVT_CHANCE1", "MID_曲名_STRM_BGM_EVT_HEIWA1", "MID_曲名_STRM_BGM_EVT_HEION1", "MID_曲名_STRM_BGM_EVT_HOUSHIN1", "MID_曲名_STRM_BGM_EVT_HUON1", "MID_曲名_STRM_BGM_EVT_ITAZURA1", "MID_曲名_STRM_BGM_EVT_KETSUI1", "MID_曲名_STRM_BGM_EVT_KIKI1", "MID_曲名_STRM_BGM_EVT_KYOAKU1", "MID_曲名_STRM_BGM_EVT_KYOUDAN1", "MID_曲名_STRM_BGM_EVT_LEGEND1", "MID_曲名_STRM_BGM_EVT_LOVE1", "MID_曲名_STRM_BGM_EVT_NAKAMA1", "MID_曲名_STRM_BGM_EVT_SAD1", "MID_曲名_STRM_BGM_EVT_SERIOUS1", "MID_曲名_STRM_BGM_EVT_SERIOUS2", "MID_曲名_STRM_BGM_EVT_TAIJI1", "MID_曲名_STRM_BGM_EVT_TAIJI2", "MID_曲名_STRM_BGM_EVT_TENNEN1", "MID_曲名_STRM_BGM_EVT_YASASHISA1", "MID_曲名_STRM_BGM_EVT_MARTH1", "MID_曲名_STRM_BGM_EVT_MYUNIT1", "MID_曲名_STRM_BGM_EVT_MYUNIT2", "MID_曲名_STRM_BGM_EVT_MYUNIT3", "MID_曲名_STRM_BGM_EVT_MYUNIT4", "MID_曲名_STRM_BGM_SYS_BASE1", "MID_曲名_STRM_BGM_SYS_MYROOM1", "MID_曲名_STRM_BGM_SYS_GMAP1", "MID_曲名_STRM_BGM_SYS_DEAD1", "MID_曲名_STRM_BGM_SYS_GAMEOVER1", "MID_曲名_STRM_BGM_SYS_CC2", "MID_曲名_STRM_BGM_SYS_SHOP1T", "MID_曲名_STRM_BGM_SYS_SHOP2T", "MID_曲名_STRM_BGM_SYS_MENU1"];
+
+for(var i=0; i < japaneseNames.length; i++){
+	$("#char1").append('<option value=' + i + '>' + englishNames[i] + '</option>');
+	$("#char2").append('<option value=' + i + '>' + englishNames[i] + '</option>');
+	$("#charTalk").append('<option value=' + i + '>' + englishNames[i] + '</option>');
+}
+for(var i=0; i < japaneseExp.length; i++){
+	$("#emotion").append('<option value=' + i + '>' + englishExp[i] + '</option>');
+}
+for(var i=0; i < japaneseOpExp.length; i++){
+	$("#opEmotion").append('<option value=' + i + '>' + englishOpExp[i] + '</option>');
+}
+
+$("#bgm26").attr('checked', 'checked');
+
+var level = $('#level').val();
+var type = $('#type').val();
+var char1 = $('#char1').val();
+var char2 = $('#char2').val();
+var charTalk = $('#charTalk').val();
+var prevCharTalk = -1;
+var transition = "";
+var charactersTalking = [];
+var screaming = $('#screaming').val();
+var bgm = $('input[name=bgm]:checked', '#bgmSelector').val();
+
+
+
+//for support title
+var supportName = "";
+var messArchive = "";
+var bgmString = "";
+//container with all the conversation
+var converContainer = [];
+
+$('#level').on('change', function() {
+  level = $(this).val();
+  refreshSettings();
+});
+
+$('#type').on('change', function() {
+  type = $(this).val();
+  refreshSettings();
+});
+
+$('#char1').on('change', function() {
+  char1 = $(this).val();
+  refreshSettings();
+});
+
+$('#char2').on('change', function() {
+  char2 = $(this).val();
+  refreshSettings();
+});
+
+$('#charTalk').on('change', function() {
+  charTalk = $(this).val();
+});
+
+$('#screaming').on('change', function() {
+  screaming = $(this).val();
+});
+
+$('#bgmSelector input').on('change', function() {
+	bgm = $('input[name=bgm]:checked', '#bgmSelector').val();
+	refreshSettings();
+});
+
+//assigns the initial settings
+refreshSettings();
+
+function addGlobe(addType){
+
+	var currentChar = englishNames[charTalk].toLowerCase();
+	currentChar = currentChar.replace(/\s/g, '');
+	currentChar = currentChar.replace(/'/g, '');
+	var img = "img/" + currentChar + ".png";
+	
+	var side = $('#side').val();
+	var emotion = $('#emotion').val();
+	var opEmotion = $('#opEmotion').val();
+	var sideTxt = "";
+	var boxType = "";
+	
+	if($.inArray(charTalk, charactersTalking) > -1){
+		sideTxt = "";
+	}else{
+		charactersTalking.push(charTalk);
+		sideTxt = side;
+	}
+	
+	if(screaming == 1){
+		boxType = "$Wv";
+	}
+	
+	var talking = document.getElementById("charBox").value;
+	
+	var playerHelper = "";
+	if(talking.indexOf("$Nu") > -1){
+		playerHelper = "$a";
+	}
+	
+	//If there's no previous character
+	if(prevCharTalk == -1){
+		transition = "";
+	}else{
+		if(englishNames[charTalk] == englishNames[prevCharTalk]){ //if previous character is the same
+			transition = "$k$p";
+		}else{// if previous character is different
+			transition = "$k\\n";
+		}
+	}
+	
+	var codeConv = transition + playerHelper + "$Wm" + japaneseNames[charTalk] + "|" + sideTxt + "$w0|$Ws" + japaneseNames[charTalk] + "|$Wa$E" + japaneseExp[emotion] + japaneseOpExp[opEmotion] + "|" + boxType + talking;
+	
+	var talkingFix = talking.toString().replace(/'/g, "&#39;");
+	var id1 = converContainer.length;
+	
+	if(addType > -1){
+		id1 = addType;
+	}
+	
+	var globeId = "globe" + id1;
+	
+	if(addType == -1){ //if it's a new text globe
+		if(side == 7){
+			document.getElementById("conversationFull").innerHTML += "<div class='row' id='" + globeId + "'>"
+			+ "<div class='col-md-3'><a onclick='deleteGlobe(\"" + id1 + "\")'>[Delete]</a>"
+			+ "<a onclick='editGlobe(" + id1 + "," + charTalk + "," + side + "," + emotion + "," + opEmotion + "," + screaming + ",\"" + talkingFix + "\")'>[Edit]</a><img src='" + img + "' class='imgFlip' /></div>"
+			+ "<div class='col-md-9'><p>" + codeConv + "</p></div></div>";
+		}else{
+			document.getElementById("conversationFull").innerHTML += "<div class='row' id='" + globeId + "'>"
+			+ "<div class='col-md-9'><p style='text-align:right;'>" + codeConv + "</p></div>"
+			+ "<div class='col-md-3'><a onclick='deleteGlobe(\"" + id1 + "\")'>[Delete]</a>"
+			+"<a onclick='editGlobe(" + id1 + "," + charTalk + "," + side + "," + emotion + "," + opEmotion + "," + screaming + ",\"" + talkingFix + "\")'>[Edit]</a><img src='" + img + "' /></div></div>";
+		}
+		converContainer.push(codeConv);
+		prevCharTalk = charTalk;
+	}else{
+		//if it's an existing text globe
+		converContainer[addType] = codeConv;
+		if(side == 7){
+			document.getElementById(globeId).innerHTML = "<div class='col-md-3'><a onclick='deleteGlobe(\"" + id1 + "\")'>[Delete]</a>"
+			+ "<a onclick='editGlobe(" + id1 + "," + charTalk + "," + side + "," + emotion + "," + opEmotion + "," + screaming + ",\"" + talkingFix + "\")'>[Edit]</a><img src='" + img + "' class='imgFlip' /></div>"
+			+ "<div class='col-md-9'><p>" + codeConv + "</p></div>";
+		}else{
+			document.getElementById(globeId).innerHTML = "<div class='col-md-9'><p style='text-align:right;'>" + codeConv + "</p></div>"
+			+ "<div class='col-md-3'><a onclick='deleteGlobe(\"" + id1 + "\")'>[Delete]</a>"
+			+"<a onclick='editGlobe(" + id1 + "," + charTalk + "," + side + "," + emotion + "," + opEmotion + "," + screaming + ",\"" + talkingFix + "\")'>[Edit]</a><img src='" + img + "' /></div>";
+		}
+	}
+	
+	refreshTxt();
+	document.getElementById("charBox").value = "";
+}
+
+function refreshTxt(){
+	document.getElementById("textbox").value = "";
+	document.getElementById("textbox").value += messArchive + "\n";
+	
+	document.getElementById("textbox").value += supportName;
+	document.getElementById("textbox").value += bgmString;
+	
+	
+	for(var x=0; x < converContainer.length; x++){
+		document.getElementById("textbox").value += converContainer[x];
+	}
+}
+
+function deleteGlobe(id){
+	converContainer[id] = "";
+	$("#globe" + id).remove();
+	refreshTxt();
+}
+
+function editGlobe(id, whichChar, whichSide, whichEmotion, whichOpEmotion, whichScreaming, whichTalk){
+	console.log(id);
+	$('#charTalk').val(whichChar);
+	$('#side').val(whichSide);
+	$('#emotion').val(whichEmotion);
+	$('#opEmotion').val(whichOpEmotion);
+	$('#screaming').val(whichScreaming);
+	document.getElementById("charBox").value = whichTalk;
+	document.getElementById("saveButton").style.visibility = "visible";
+	document.getElementById("saveButton").onclick = function() { saveGlobe(id); };
+}
+
+function saveGlobe(id){
+	document.getElementById("saveButton").style.visibility = "hidden";
+	addGlobe(id);
+}
+
+function refreshSettings(){
+	messArchive = "MESS_ARCHIVE_" + japaneseNames[char1] + "_" + japaneseNames[char2] + japaneseType[type];
+	supportName = "MID_支援_" + japaneseNames[char1] + "_" + japaneseNames[char2] + japaneseType[type] + "_" + level + ": ";
+	bgmString = "$SbpSTRM_BGM_EVT_" + bgmList[bgm] + "|0|$t1";
+	
+	document.getElementById("downloadlink").download = japaneseNames[char1] + "_" + japaneseNames[char2] + japaneseType[type] + ".txt";
+}
+
+function endConversation(){
+	document.getElementById("textbox").value += "$k\\n$Sbs1000|";
+}
+</script>
+
+<script>
+<!-- Generate text file script -->
+
+(function () {
+	var textFile = null,
+	makeTextFile = function (text) {
+		var data = new Blob([text], {type: 'text/plain'});
+
+		// If we are replacing a previously generated file we need to
+		// manually revoke the object URL to avoid memory leaks.
+		if (textFile !== null) {
+		  window.URL.revokeObjectURL(textFile);
+		}
+
+		textFile = window.URL.createObjectURL(data);
+
+		return textFile;
+	};
+
+
+	var create = document.getElementById('create'),
+    textbox = document.getElementById('textbox');
+
+	create.addEventListener('click', function () {
+		endConversation();
+		var link = document.getElementById('downloadlink');
+		link.href = makeTextFile(textbox.value);
+		link.style.display = 'block';
+	}, false);
+})();
+</script>
